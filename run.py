@@ -19,38 +19,30 @@ NAME2 = sys.argv[5]
 SAVINGS = 100.0
 
 def balance(amount1, price1, share1, amount2, price2, share2, tax):
-    print "==== IN"
-    print amount1, price1, share1, amount2, price2, share2, tax
     s = amount1 * price1 + amount2 * price2 + SAVINGS
     t1 = s * share1 / price1
     t2 = s * share2 / price2
-    print t1, t2
     b = SAVINGS
     if (t1 > amount1) and (b > 0):
         inc = min(b, (t1 - amount1) * price1)
         amount1 = amount1 + inc / price1
         b = b - inc
-        print "%f, %f" % (inc, amount1)
 
     if (t2 > amount2) and (b > 0):
         inc = min(b, (t2 - amount2) * price2)
         amount2 = amount2 + inc / price2
         b = b - inc
-        print "%f, %f" % (inc, amount2)
 
-    print amount1, price1, share1, amount2, price2, share2, tax
     if tax > 0.0001:
         if amount1 < t1 - 0.001:
             inc = (amount2 - t2) * price2 * (1.0 - tax)
             amount1 = amount1 + inc / price1
             amount2 = t2
-            print "%f, %f, %f" % (inc, amount1, amount2)
 
         if amount2 < t2 - 0.001:
             inc = (amount1 - t1) * price1 * (1.0 - tax)
             amount2 = amount2 + inc / price2
             amount1 = t1
-            print "%f, %f, %f" % (inc, amount1, amount2)
 
     return amount1, amount2
 
