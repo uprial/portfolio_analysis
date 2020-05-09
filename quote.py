@@ -6,36 +6,36 @@ class Quote(object):
     DATE_FORMAT = "%Y-%m-%d"
     DELIM = ","
 
-    CLOSE_PRICE_KEYS = ["\"closing value\"", "close"]
+    PRICE_KEYS = ["\"closing value\"", "close"]
 
-    def __init__(self, date, close_price):
+    def __init__(self, date, price):
         self._date = date
-        self._close_price = close_price
+        self._price = price
 
     @classmethod
     def decode(cls, data):
         date = datetime.strptime(data[cls.get_date_field_name()], cls.DATE_FORMAT)
 
-        close_price_key = None
-        for _close_price_key in cls.CLOSE_PRICE_KEYS:
-            if _close_price_key in data:
-                close_price_key = _close_price_key
+        price_key = None
+        for _price_key in cls.PRICE_KEYS:
+            if _price_key in data:
+                price_key = _price_key
 
-        if close_price_key is None:
-            raise Exception(("Couldn't find any of close price keys %s in data: %s."
-                             % (cls.CLOSE_PRICE_KEYS, data)))
+        if price_key is None:
+            raise Exception(("Couldn't find any of price keys %s in data: %s."
+                             % (cls.PRICE_KEYS, data)))
 
-        close_price = (float)(data[close_price_key])
+        price = (float)(data[price_key])
 
-        return Quote(date, close_price)
+        return Quote(date, price)
 
     @property
     def date(self):
         return self._date
 
     @property
-    def close_price(self):
-        return self._close_price
+    def price(self):
+        return self._price
 
     @classmethod
     def get_date_field_name(cls):
@@ -45,7 +45,7 @@ class Quote(object):
         return self.DELIM.join(["Date", "Close"])
 
     def __str__(self):
-        return self.DELIM.join([self._date.strftime(self.DATE_FORMAT), "%f" % (self._close_price)])
+        return self.DELIM.join([self._date.strftime(self.DATE_FORMAT), "%f" % (self._price)])
 
     def __repr__(self):
         return self.__str__()

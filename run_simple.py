@@ -26,15 +26,15 @@ def main():
         if (prev_year is None) or (quote.date.year > prev_year):
             prev_year = quote.date.year
 
-            amount += SAVINGS / quote.close_price
+            amount += SAVINGS / quote.price
 
 
-        r_quote = Quote(quote.date, amount * quote.close_price)
+        r_quote = Quote(quote.date, amount * quote.price)
         r_quotes.append(r_quote)
 
     QuoteHistory("%s-%d.csv" % (NAME, SAVINGS)).put_quotes(r_quotes)
 
     print >> sys.stderr, ("%f x %f = %f"
-                          % (amount, quote.close_price, amount * quote.close_price))
+                          % (amount, quote.price, amount * quote.price))
 
 main()

@@ -38,14 +38,14 @@ def main():
     quotes = QuoteHistory("%s.csv" % (NAME)).get_quotes(Quote)
     quote0 = quotes[0]
 
-    leveraged_price = quote0.close_price
+    leveraged_price = quote0.price
 
     report(quote0, leveraged_price)
 
     l_quotes = []
     for quote in quotes:
         expenses = get_expenses(quote0.date, quote.date)
-        leveraged_price *= get_leverage(quote0.close_price, quote.close_price, expenses)
+        leveraged_price *= get_leverage(quote0.price, quote.price, expenses)
 
         l_quote = Quote(quote.date, leveraged_price)
         l_quotes.append(l_quote)

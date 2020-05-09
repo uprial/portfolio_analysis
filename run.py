@@ -62,20 +62,20 @@ def main():
         if (prev_year is None) or (quote1.date.year > prev_year):
             prev_year = quote1.date.year
 
-            amount1, amount2 = balance(amount1, quote1.close_price, SHARE1,
-                                       amount2, quote2.close_price, SHARE2,
+            amount1, amount2 = balance(amount1, quote1.price, SHARE1,
+                                       amount2, quote2.price, SHARE2,
                                        TAX)
 
 
-        r_quote = Quote(quote1.date, amount1 * quote1.close_price + amount2 * quote2.close_price)
+        r_quote = Quote(quote1.date, amount1 * quote1.price + amount2 * quote2.price)
         r_quotes.append(r_quote)
 
     QuoteHistory(("%.2f-%s-%.2f-%s-tax-%.0f.csv"
                   % (SHARE1, NAME1, SHARE2, NAME2, TAX * 100))).put_quotes(r_quotes)
 
     print >> sys.stderr, ("%f x %f = %f"
-                          % (amount1, quote1.close_price, amount1 * quote1.close_price))
+                          % (amount1, quote1.price, amount1 * quote1.price))
     print >> sys.stderr, ("%f x %f = %f"
-                          % (amount2, quote2.close_price, amount2 * quote2.close_price))
+                          % (amount2, quote2.price, amount2 * quote2.price))
 
 main()
