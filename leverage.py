@@ -8,7 +8,7 @@ from quote import Quote
 from quote_history import QuoteHistory
 
 if len(sys.argv) < 2:
-    print "%s NAME" % (sys.argv[0])
+    print >> sys.stderr, "%s NAME" % (sys.argv[0])
     exit(1)
 
 NAME = sys.argv[1]

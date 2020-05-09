@@ -7,7 +7,7 @@ from quote import Quote
 from quote_history import QuoteHistory
 
 if len(sys.argv) < 6:
-    print "%s TAX SHARE1 NAME1 SHARE2 NAME2" % (sys.argv[0])
+    print >> sys.stderr, "%s TAX SHARE1 NAME1 SHARE2 NAME2" % (sys.argv[0])
     exit(1)
 
 TAX = (float)(sys.argv[1])
