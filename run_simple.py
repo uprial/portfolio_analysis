@@ -34,7 +34,8 @@ def main():
 
     QuoteHistory("%s-%d.csv" % (NAME, SAVINGS)).put_quotes(r_quotes)
 
+    last_quote = quotes[len(quotes) - 1]
     print >> sys.stderr, ("%f x %f = %f"
-                          % (amount, quote.price, amount * quote.price))
+                          % (amount, last_quote.price, amount * last_quote.price))
 
 main()
