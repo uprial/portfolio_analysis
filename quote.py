@@ -27,7 +27,7 @@ class Quote(object):
 
         price = (float)(data[price_key])
 
-        return Quote(date, price)
+        return cls(date, price)
 
     @property
     def date(self):
