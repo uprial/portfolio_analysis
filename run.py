@@ -18,31 +18,34 @@ NAME2 = sys.argv[5]
 
 SAVINGS = 100.0
 
-def balance(amount1, price1, share1, amount2, price2, share2, tax):
-    s = amount1 * price1 + amount2 * price2 + SAVINGS
-    t1 = s * share1 / price1
-    t2 = s * share2 / price2
-    b = SAVINGS
-    if (t1 > amount1) and (b > 0):
-        inc = min(b, (t1 - amount1) * price1)
+def balance(amount1, price1, share1, amount2, price2, share2, tax): # pylint: disable=too-many-arguments
+    total_amount = amount1 * price1 + amount2 * price2 + SAVINGS
+    t_amount1 = total_amount * share1 / price1
+    t_amount2 = total_amount * share2 / price2
+    excessive_money = SAVINGS
+    if (t_amount1 > amount1) and (excessive_money > 0):
+        inc = min(excessive_money, (t_amount1 - amount1) * price1)
         amount1 = amount1 + inc / price1
-        b = b - inc
+        excessive_money = excessive_money - inc
 
-    if (t2 > amount2) and (b > 0):
-        inc = min(b, (t2 - amount2) * price2)
+    if (t_amount2 > amount2) and (excessive_money > 0):
+        inc = min(excessive_money, (t_amount2 - amount2) * price2)
         amount2 = amount2 + inc / price2
-        b = b - inc
+        excessive_money = excessive_money - inc
+
+    if excessive_money > 0.0001:
+        raise Exception("Some money has not been spent on the portfolio: %f" % (excessive_money))
 
     if tax > 0.0001:
-        if amount1 < t1 - 0.001:
-            inc = (amount2 - t2) * price2 * (1.0 - tax)
+        if amount1 < t_amount1 - 0.001:
+            inc = (amount2 - t_amount2) * price2 * (1.0 - tax)
             amount1 = amount1 + inc / price1
-            amount2 = t2
+            amount2 = t_amount2
 
-        if amount2 < t2 - 0.001:
-            inc = (amount1 - t1) * price1 * (1.0 - tax)
+        if amount2 < t_amount2 - 0.001:
+            inc = (amount1 - t_amount1) * price1 * (1.0 - tax)
             amount2 = amount2 + inc / price2
-            amount1 = t1
+            amount1 = t_amount1
 
     return amount1, amount2
 
