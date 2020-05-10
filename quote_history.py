@@ -35,10 +35,14 @@ class QuoteHistory(object):
             if lines[i]:
                 cells = self._split(lines[i])
                 data = {}
+                null = True
                 for j in xrange(len(keys)):
                     data[keys[j]] = cells[j]
+                    if keys[j] != quotes_class.get_date_field_name() and cells[j].lower() != "null":
+                        null = False
 
-                quotes.append(quotes_class.decode(data))
+                if not null:
+                    quotes.append(quotes_class.decode(data))
             i += 1
 
         if len(quotes) < 1:
