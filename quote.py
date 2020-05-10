@@ -6,7 +6,7 @@ class Quote(object):
     DATE_FORMAT = "%Y-%m-%d"
     DELIM = ","
 
-    PRICE_KEYS = ["\"closing value\"", "close"]
+    PRICE_KEYS = ["close"]
 
     def __init__(self, date, price):
         self._date = date
@@ -42,7 +42,7 @@ class Quote(object):
         return "date"
 
     def get_header(self):
-        return self.DELIM.join(["Date", "Close"])
+        return self.DELIM.join(["Date", "Price"])
 
     def __str__(self):
         return self.DELIM.join([self._date.strftime(self.DATE_FORMAT), "%f" % (self._price)])
